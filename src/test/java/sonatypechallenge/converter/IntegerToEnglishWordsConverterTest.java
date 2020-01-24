@@ -4,17 +4,20 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.junit.Test;
 
-public class NumberToEnglishWordsConverterTest {
+import sonatypechallenge.converter.english.IntegerToEnglishWordsConverter;
+
+public class IntegerToEnglishWordsConverterTest {
 
 	@Test
 	public void convertZeroToNinePositiveNumbers() {
 		final int start = 0;
 		final int end = 10;
 
-		Map<Integer, String> expectedResults = new HashMap<>(9);
+		Map<Integer, String> expectedResults = new HashMap<>(10);
 		expectedResults.put(0, "zero");
 		expectedResults.put(1, "one");
 		expectedResults.put(2, "two");
@@ -26,7 +29,7 @@ public class NumberToEnglishWordsConverterTest {
 		expectedResults.put(8, "eight");
 		expectedResults.put(9, "nine");
 
-		NumberToWordsConverter englishConverter = new NumberToEnglishWordsConverter();
+		IntegerToWordsConverter englishConverter = new IntegerToEnglishWordsConverter();
 		for (int i = start; i < end; i++) {
 			String numberInWords = englishConverter.transformIntoWords(i);
 			assertEquals(expectedResults.get(i), numberInWords);
@@ -38,7 +41,7 @@ public class NumberToEnglishWordsConverterTest {
 		final int start = 10;
 		final int end = 20;
 
-		Map<Integer, String> expectedResults = new HashMap<>(9);
+		Map<Integer, String> expectedResults = new HashMap<>(10);
 		expectedResults.put(10, "ten");
 		expectedResults.put(11, "eleven");
 		expectedResults.put(12, "twelve");
@@ -50,7 +53,7 @@ public class NumberToEnglishWordsConverterTest {
 		expectedResults.put(18, "eighteen");
 		expectedResults.put(19, "nineteen");
 
-		NumberToWordsConverter englishConverter = new NumberToEnglishWordsConverter();
+		IntegerToWordsConverter englishConverter = new IntegerToEnglishWordsConverter();
 		for (int i = start; i < end; i++) {
 			String numberInWords = englishConverter.transformIntoWords(i);
 			assertEquals(expectedResults.get(i), numberInWords);
@@ -62,7 +65,7 @@ public class NumberToEnglishWordsConverterTest {
 		final int start = 10;
 		final int end = 20;
 
-		Map<Integer, String> expectedResults = new HashMap<>(9);
+		Map<Integer, String> expectedResults = new HashMap<>(10);
 		expectedResults.put(10, "ten");
 		expectedResults.put(20, "twenty");
 		expectedResults.put(30, "thirty");
@@ -73,10 +76,22 @@ public class NumberToEnglishWordsConverterTest {
 		expectedResults.put(80, "eighty");
 		expectedResults.put(90, "ninety");
 
-		NumberToWordsConverter englishConverter = new NumberToEnglishWordsConverter();
+		IntegerToWordsConverter englishConverter = new IntegerToEnglishWordsConverter();
 		for (int i = start; i < end; i++) {
 			String numberInWords = englishConverter.transformIntoWords(i);
 			assertEquals(expectedResults.get(i), numberInWords);
+		}
+	}
+
+	public void convertNegativeNumber() {
+		IntegerToWordsConverter englishConverter = new IntegerToEnglishWordsConverter();
+		Map<Integer, String> expectedResults = new HashMap<>(9);
+		expectedResults.put(-8, "minus eight");
+		expectedResults.put(-12, "minus eight");
+		expectedResults.put(-320, "minus eight");
+
+		for (Entry<Integer, String> entry : expectedResults.entrySet()) {
+			assertEquals(entry.getValue(), englishConverter.transformIntoWords(entry.getKey()));
 		}
 	}
 }
