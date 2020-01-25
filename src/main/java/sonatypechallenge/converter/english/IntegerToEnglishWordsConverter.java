@@ -26,16 +26,11 @@ public class IntegerToEnglishWordsConverter implements IntegerToWordsConverter {
 	@Override
 	public String transformIntoWords(int numberToConvert) {
 		if (numberToConvert == 0) {
-			return EnglishNumbersBelowTwenty.ZERO.getStringRepresentation();
+			return EnglishNumbersBelowTwenty.ZERO.toString();
 		}
 
 		initializeTransformationValues(numberToConvert);
 		addMinusForNegativeNumber();
-
-		if (this.absoluteNumberToConvert < 20) {
-			words.add(EnglishNumbersBelowTwenty.findNumber(absoluteNumberToConvert).getStringRepresentation());
-			return words.stream().collect(Collectors.joining(" "));
-		}
 
 		if (numberAsStringGroups.length > 0) {
 			buildNumberRepresentationAsString();
@@ -47,28 +42,39 @@ public class IntegerToEnglishWordsConverter implements IntegerToWordsConverter {
 	private void buildNumberRepresentationAsString() {
 		char[] groupCharArray = numberAsStringGroups[0].toCharArray();
 		if (groupCharArray.length == 3 && groupCharArray[0] != '0') {
-			EnglishNumbersBelowTwenty hundredDigit = EnglishNumbersBelowTwenty.findNumber("00" + groupCharArray[0]);
-			words.add(hundredDigit.getStringRepresentation());
+			EnglishNumbersBelowTwenty hundredDigit = EnglishNumbersBelowTwenty.findNumber("" + groupCharArray[0]);
+			words.add(hundredDigit.toString());
 			words.add(HUNDRED_MARKER_WORD);
 
 			String numberToParse = "" + groupCharArray[1] + groupCharArray[2];
-
-			parseTwoDigitNumber(numberToParse);
+			parseTwoOrOneDigitNumber(numberToParse);
 		} else {
 			String numberToParse = groupCharArray.length == 1 ? String.valueOf(groupCharArray[0])
 					: "" + groupCharArray[0] + groupCharArray[1];
-
-			parseTwoDigitNumber(numberToParse);
+			parseTwoOrOneDigitNumber(numberToParse);
 		}
 	}
 
-	private void parseTwoDigitNumber(String numberToParse) {
+	private void parseTwoOrOneDigitNumber(String numberToParse) {
 		int parsedRemainder = Integer.parseInt(numberToParse);
+		if (parsedRemainder == 0) {
+			// 0 doesn't need representation for numbers above it
+			return;
+		}
 		if (parsedRemainder < 20) {
 			EnglishNumbersBelowTwenty numberBelowTwenty = EnglishNumbersBelowTwenty.findNumber(parsedRemainder);
-			words.add(numberBelowTwenty.getStringRepresentation());
+			words.add(numberBelowTwenty.toString());
 		} else {
-			words.add("unavailable conversion");
+			int tens = (parsedRemainder / 10) * 10;
+			int units = parsedRemainder % 10;
+
+			EnglishTens tensRepresentation = EnglishTens.findNumber(tens);
+			EnglishNumbersBelowTwenty unitsRepresentation = EnglishNumbersBelowTwenty.findNumber(units);
+			if (units == 0) {
+				words.add(tensRepresentation.toString());
+			} else {
+				words.add(tensRepresentation.toString() + "-" + unitsRepresentation.toString());
+			}
 		}
 	}
 
@@ -113,11 +119,11 @@ enum EnglishNumbersBelowTwenty {
 	THIRTEEN(13, "013"), FOURTEEN(14, "014"), FIFTEEN(15, "015"), SIXTEEN(16, "016"), SEVENTEEN(17, "017"),
 	EIGHTEEN(18, "018"), NINETEEN(19, "019");
 
-	private int numberAsInt;
-	private String numberAsThreeDigitString;
+	private final int numberAsInt;
+	private final String numberAsThreeDigitString;
 
-	private static Map<Integer, EnglishNumbersBelowTwenty> numberSearchByIntRepresentation = new HashMap<>();
-	private static Map<String, EnglishNumbersBelowTwenty> numberSearchByStringRepresentation = new HashMap<>();
+	private final static Map<Integer, EnglishNumbersBelowTwenty> numberSearchByIntRepresentation = new HashMap<>();
+	private final static Map<String, EnglishNumbersBelowTwenty> numberSearchByStringRepresentation = new HashMap<>();
 
 	static {
 		for (EnglishNumbersBelowTwenty number : EnglishNumbersBelowTwenty.values()) {
@@ -136,10 +142,38 @@ enum EnglishNumbersBelowTwenty {
 	}
 
 	static EnglishNumbersBelowTwenty findNumber(String numberToSearch) {
-		return numberSearchByStringRepresentation.get(numberToSearch);
+		String numberAs3DigitString = numberToSearch.length() == 1 ? "00" + numberToSearch : "0" + numberToSearch;
+		return numberSearchByStringRepresentation.get(numberAs3DigitString);
 	}
 
-	String getStringRepresentation() {
+	@Override
+	public String toString() {
+		return name().toLowerCase();
+	}
+}
+
+enum EnglishTens {
+	TEN(10), TWENTY(20), THIRTY(30), FORTY(40), FIFTY(50), SIXTY(60), SEVENTY(70), EIGHTY(80), NINETY(90);
+
+	private final int numberAsInt;
+	private final static Map<Integer, EnglishTens> numberSearchByIntRepresentation = new HashMap<>();
+
+	static {
+		for (EnglishTens number : EnglishTens.values()) {
+			numberSearchByIntRepresentation.put(number.numberAsInt, number);
+		}
+	}
+
+	EnglishTens(int tensAsInt) {
+		numberAsInt = tensAsInt;
+	}
+
+	static EnglishTens findNumber(int numberToSearch) {
+		return numberSearchByIntRepresentation.get(numberToSearch);
+	}
+
+	@Override
+	public String toString() {
 		return name().toLowerCase();
 	}
 

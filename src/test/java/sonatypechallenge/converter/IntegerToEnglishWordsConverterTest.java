@@ -89,6 +89,8 @@ public class IntegerToEnglishWordsConverterTest {
 		Map<Integer, String> expectedResults = new HashMap<>(9);
 		expectedResults.put(-8, "minus eight");
 		expectedResults.put(-12, "minus twelve");
+		expectedResults.put(-55, "minus fifty-five");
+		expectedResults.put(-200, "minus two hundred");
 		expectedResults.put(-320, "minus three hundred twenty");
 
 		for (Entry<Integer, String> entry : expectedResults.entrySet()) {
