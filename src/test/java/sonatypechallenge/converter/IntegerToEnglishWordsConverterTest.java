@@ -63,7 +63,7 @@ public class IntegerToEnglishWordsConverterTest {
 	@Test
 	public void convertTwoDigitNumbers_MultipleOfTen() {
 		final int start = 10;
-		final int end = 20;
+		final int end = 90;
 
 		Map<Integer, String> expectedResults = new HashMap<>(10);
 		expectedResults.put(10, "ten");
@@ -77,18 +77,19 @@ public class IntegerToEnglishWordsConverterTest {
 		expectedResults.put(90, "ninety");
 
 		IntegerToWordsConverter englishConverter = new IntegerToEnglishWordsConverter();
-		for (int i = start; i < end; i++) {
+		for (int i = start; i < end; i += 10) {
 			String numberInWords = englishConverter.transformIntoWords(i);
 			assertEquals(expectedResults.get(i), numberInWords);
 		}
 	}
 
+	@Test
 	public void convertNegativeNumber() {
 		IntegerToWordsConverter englishConverter = new IntegerToEnglishWordsConverter();
 		Map<Integer, String> expectedResults = new HashMap<>(9);
 		expectedResults.put(-8, "minus eight");
-		expectedResults.put(-12, "minus eight");
-		expectedResults.put(-320, "minus eight");
+		expectedResults.put(-12, "minus twelve");
+		expectedResults.put(-320, "minus three hundred twenty");
 
 		for (Entry<Integer, String> entry : expectedResults.entrySet()) {
 			assertEquals(entry.getValue(), englishConverter.transformIntoWords(entry.getKey()));
