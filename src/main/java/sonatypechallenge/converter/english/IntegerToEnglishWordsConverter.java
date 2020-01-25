@@ -31,10 +31,7 @@ public class IntegerToEnglishWordsConverter implements IntegerToWordsConverter {
 
 		initializeTransformationValues(numberToConvert);
 		addMinusForNegativeNumber();
-
-		if (numberAsStringGroups.length > 0) {
-			buildNumberRepresentationAsString();
-		}
+		buildNumberRepresentationAsString();
 
 		return words.stream().collect(Collectors.joining(" "));
 	}
@@ -107,10 +104,6 @@ public class IntegerToEnglishWordsConverter implements IntegerToWordsConverter {
 		}
 	}
 
-	public static void main(String[] args) {
-		String transformIntoWords = new IntegerToEnglishWordsConverter().transformIntoWords(111);
-		System.out.println(transformIntoWords);
-	}
 }
 
 enum EnglishNumbersBelowTwenty {
