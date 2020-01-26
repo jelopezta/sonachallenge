@@ -2,7 +2,7 @@
 `mvn clean verify`
 
 
-### Start embedded tomcat
+### Start embedded tomcat with deployed application
 `mvn tomcat7:run`
 
 
