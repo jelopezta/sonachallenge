@@ -14,5 +14,5 @@ Transform an integer into words
 ### Access main page
 http://localhost:9065/sonatypechallenge/index.html
 
-### Url for internal rest service
+### Url for internal get service
 http://localhost:9065/sonatypechallenge/rest/englishconverter/{number}
