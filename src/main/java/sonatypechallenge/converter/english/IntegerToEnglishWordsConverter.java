@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 import sonatypechallenge.converter.IntegerToWordsConverter;
 
 /**
- * Transformer from integer into english words.
+ * Transformer from integer into English words.
  *
  */
 public class IntegerToEnglishWordsConverter implements IntegerToWordsConverter {
@@ -18,9 +18,10 @@ public class IntegerToEnglishWordsConverter implements IntegerToWordsConverter {
 	private static final String THOUSAND_MARKER_WORD = "thousand";
 	private static final String MILLION_MARKER_WORD = "million";
 	private static final String BILLION_MARKER_WORD = "billion";
+	private static final String[] MARKERS_PER_GROUP = new String[] { "", THOUSAND_MARKER_WORD, MILLION_MARKER_WORD,
+			BILLION_MARKER_WORD };
 
 	private List<String> words;
-	private int absoluteNumberToConvert;
 	private String[] numberAsStringGroups;
 	boolean isNegativeNumber;
 
@@ -34,23 +35,45 @@ public class IntegerToEnglishWordsConverter implements IntegerToWordsConverter {
 		addMinusForNegativeNumber();
 		buildNumberRepresentationAsString();
 
-		return words.stream().collect(Collectors.joining(" "));
+		return words.stream().collect(Collectors.joining(" ")).trim();
 	}
 
 	private void buildNumberRepresentationAsString() {
-		String group = numberAsStringGroups[0];
-		if (group.length() == 3 && group.charAt(0) != '0') {
-			EnglishNumbersBelowTwenty hundredDigit = EnglishNumbersBelowTwenty.findNumber("" + group.charAt(0));
-			words.add(hundredDigit.toString());
-			words.add(HUNDRED_MARKER_WORD);
+		int totalMarkersNeeded = numberAsStringGroups.length - 1;
+		for (String group : numberAsStringGroups) {
+			int currentWords = words.size();
+			if (group.length() == 3 && group.charAt(0) != '0') {
+				EnglishNumbersBelowTwenty hundredDigit = EnglishNumbersBelowTwenty.findNumber("" + group.charAt(0));
+				words.add(hundredDigit.toString());
+				words.add(HUNDRED_MARKER_WORD);
 
-			String numberToParse = "" + group.charAt(1) + group.charAt(2);
-			parseTwoOrOneDigitNumber(numberToParse);
-		} else {
-			String numberToParse = group.length() == 1 ? String.valueOf(group.charAt(0))
-					: "" + group.charAt(0) + group.charAt(1);
-			parseTwoOrOneDigitNumber(numberToParse);
+			}
+			String groupRemainderToParse = getRemainderToParse(group);
+			parseTwoOrOneDigitNumber(groupRemainderToParse);
+
+			if (words.size() > currentWords) {
+				// only add marker if words were added for the group
+				words.add(MARKERS_PER_GROUP[totalMarkersNeeded--]);
+			} else {
+				totalMarkersNeeded--;
+			}
 		}
+	}
+
+	private String getRemainderToParse(String number) {
+		String numberToParse;
+		switch (number.length()) {
+		case 3:
+			numberToParse = "" + number.charAt(1) + number.charAt(2);
+			break;
+		case 2:
+			numberToParse = "" + number.charAt(0) + number.charAt(1);
+			break;
+		default:
+			numberToParse = String.valueOf(number.charAt(0));
+			break;
+		}
+		return numberToParse;
 	}
 
 	private void parseTwoOrOneDigitNumber(String numberToParse) {
@@ -78,12 +101,12 @@ public class IntegerToEnglishWordsConverter implements IntegerToWordsConverter {
 
 	private void initializeTransformationValues(int numberToConvert) {
 		isNegativeNumber = numberToConvert < 0;
-		absoluteNumberToConvert = Math.abs(numberToConvert);
-		numberAsStringGroups = getNumberTokens(this.absoluteNumberToConvert);
+		numberAsStringGroups = getThreeDigitNumberTokensOfPositiveNumber(numberToConvert);
 		words = new ArrayList<>();
 	}
 
-	private String[] getNumberTokens(int numberToConvert) {
+	private String[] getThreeDigitNumberTokensOfPositiveNumber(int numberToConvert) {
+		int absoluteNumberToConvert = Math.abs(numberToConvert);
 		// Use a custom separator to prevent locale specific problems when splitting
 		DecimalFormatSymbols customDecimalFormatSeparator = new DecimalFormatSymbols(Locale.getDefault());
 		customDecimalFormatSeparator.setGroupingSeparator('|');
@@ -92,7 +115,7 @@ public class IntegerToEnglishWordsConverter implements IntegerToWordsConverter {
 		// using a custom one
 		String formatPattern = "#,###";
 		DecimalFormat formatter = new DecimalFormat(formatPattern, customDecimalFormatSeparator);
-		String format = formatter.format(numberToConvert);
+		String format = formatter.format(absoluteNumberToConvert);
 		return format.split("\\|");
 	}
 
