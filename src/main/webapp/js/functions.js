@@ -1,5 +1,6 @@
 function convertNumber() {
-	let basePath = document.location.origin + '/sonatypechallenge/rest/englishconverter/767534';
+	var numberInput = document.getElementById('numberToTransform');
+	let basePath = document.location.origin + '/sonatypechallenge/rest/englishconverter/' + numberInput.value;
 	fetch(basePath)
 	  .then((response) => {
 	    return response.text();
@@ -13,4 +14,6 @@ function convertNumber() {
 function clearResult() {
 		 var resultLabel =document.getElementById('responseLabel')
 		 resultLabel.innerText = '';
+		 var numberInput = document.getElementById('numberToTransform');
+		 numberInput.value = '';
 }
