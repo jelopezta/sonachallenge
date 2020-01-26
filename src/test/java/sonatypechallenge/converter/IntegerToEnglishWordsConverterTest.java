@@ -2,9 +2,9 @@ package sonatypechallenge.converter;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
 import org.junit.Test;
 
@@ -21,7 +21,7 @@ public class IntegerToEnglishWordsConverterTest {
 
 	@Test
 	public void convertOneToNinePositiveNumbers() {
-		Map<Integer, String> expectedResults = new HashMap<>(10);
+		Map<Integer, String> expectedResults = new TreeMap<>();
 		expectedResults.put(0, "zero");
 		expectedResults.put(1, "one");
 		expectedResults.put(2, "two");
@@ -41,7 +41,7 @@ public class IntegerToEnglishWordsConverterTest {
 
 	@Test
 	public void convertTwoDigitNumbers_10To19() {
-		Map<Integer, String> expectedResults = new HashMap<>(10);
+		Map<Integer, String> expectedResults = new TreeMap<>();
 		expectedResults.put(10, "ten");
 		expectedResults.put(11, "eleven");
 		expectedResults.put(12, "twelve");
@@ -61,7 +61,7 @@ public class IntegerToEnglishWordsConverterTest {
 
 	@Test
 	public void convertTwoDigitNumbers_MultipleOfTen() {
-		Map<Integer, String> expectedResults = new HashMap<>(10);
+		Map<Integer, String> expectedResults = new TreeMap<>();
 		expectedResults.put(10, "ten");
 		expectedResults.put(20, "twenty");
 		expectedResults.put(30, "thirty");
@@ -80,7 +80,7 @@ public class IntegerToEnglishWordsConverterTest {
 
 	@Test
 	public void convertTwoDigitNumbers_Above20_below100() {
-		Map<Integer, String> expectedResults = new HashMap<>(10);
+		Map<Integer, String> expectedResults = new TreeMap<>();
 		expectedResults.put(23, "twenty-three");
 		expectedResults.put(35, "thirty-five");
 		expectedResults.put(47, "forty-seven");
@@ -98,7 +98,7 @@ public class IntegerToEnglishWordsConverterTest {
 
 	@Test
 	public void convertThreeDigitNumbers_MultipleOfHundred() {
-		Map<Integer, String> expectedResults = new HashMap<>(10);
+		Map<Integer, String> expectedResults = new TreeMap<>();
 		expectedResults.put(100, "one hundred");
 		expectedResults.put(200, "two hundred");
 		expectedResults.put(300, "three hundred");
@@ -116,8 +116,59 @@ public class IntegerToEnglishWordsConverterTest {
 	}
 
 	@Test
+	public void convertFourDigitNumbers() {
+		Map<Integer, String> expectedResults = new TreeMap<>();
+		expectedResults.put(1000, "one thousand");
+		expectedResults.put(2200, "two thousand two hundred");
+		expectedResults.put(3240, "three thousand two hundred forty");
+		expectedResults.put(4248, "four thousand two hundred forty-eight");
+		expectedResults.put(5098, "five thousand ninety-eight");
+		expectedResults.put(6001, "six thousand one");
+		expectedResults.put(7505, "seven thousand five hundred five");
+
+		IntegerToWordsConverter englishConverter = new IntegerToEnglishWordsConverter();
+		for (Entry<Integer, String> entry : expectedResults.entrySet()) {
+			assertEquals(entry.getValue(), englishConverter.transformIntoWords(entry.getKey()));
+		}
+	}
+	
+	@Test
+	public void convertSevenDigitNumbers() { // TODO 
+		/*Map<Integer, String> expectedResults = new TreeMap<>();
+		expectedResults.put(1000, "one thousand");
+		expectedResults.put(2200, "two thousand two hundred");
+		expectedResults.put(3240, "three thousand two hundred forty");
+		expectedResults.put(4248, "four thousand two hundred forty-eight");
+		expectedResults.put(5098, "five thousand ninety-eight");
+		expectedResults.put(6001, "six thousand one");
+		expectedResults.put(7505, "seven thousand five hundred five");
+
+		IntegerToWordsConverter englishConverter = new IntegerToEnglishWordsConverter();
+		for (Entry<Integer, String> entry : expectedResults.entrySet()) {
+			assertEquals(entry.getValue(), englishConverter.transformIntoWords(entry.getKey()));
+		}*/
+	}
+	
+	@Test
+	public void convertTenDigitNumbers() { // TODO 
+		/*Map<Integer, String> expectedResults = new TreeMap<>();
+		expectedResults.put(1000, "one thousand");
+		expectedResults.put(2200, "two thousand two hundred");
+		expectedResults.put(3240, "three thousand two hundred forty");
+		expectedResults.put(4248, "four thousand two hundred forty-eight");
+		expectedResults.put(5098, "five thousand ninety-eight");
+		expectedResults.put(6001, "six thousand one");
+		expectedResults.put(7505, "seven thousand five hundred five");
+
+		IntegerToWordsConverter englishConverter = new IntegerToEnglishWordsConverter();
+		for (Entry<Integer, String> entry : expectedResults.entrySet()) {
+			assertEquals(entry.getValue(), englishConverter.transformIntoWords(entry.getKey()));
+		}*/
+	}
+
+	@Test
 	public void convertNegativeNumbers() {
-		Map<Integer, String> expectedResults = new HashMap<>(9);
+		Map<Integer, String> expectedResults = new TreeMap<>();
 		expectedResults.put(-8, "minus eight");
 		expectedResults.put(-12, "minus twelve");
 		expectedResults.put(-55, "minus fifty-five");
