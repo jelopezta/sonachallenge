@@ -7,7 +7,7 @@
 
 
 ### Acces main page
-http://localhost:9065/sonatypechallenge/
+http://localhost:9065/sonatypechallenge/index.html
 
 ### Url for internal rest service
 http://localhost:9065/sonatypechallenge/rest/englishconverter/{number}
