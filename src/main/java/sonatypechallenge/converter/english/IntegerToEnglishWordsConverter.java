@@ -38,17 +38,17 @@ public class IntegerToEnglishWordsConverter implements IntegerToWordsConverter {
 	}
 
 	private void buildNumberRepresentationAsString() {
-		char[] groupCharArray = numberAsStringGroups[0].toCharArray();
-		if (groupCharArray.length == 3 && groupCharArray[0] != '0') {
-			EnglishNumbersBelowTwenty hundredDigit = EnglishNumbersBelowTwenty.findNumber("" + groupCharArray[0]);
+		String group = numberAsStringGroups[0];
+		if (group.length() == 3 && group.charAt(0) != '0') {
+			EnglishNumbersBelowTwenty hundredDigit = EnglishNumbersBelowTwenty.findNumber("" + group.charAt(0));
 			words.add(hundredDigit.toString());
 			words.add(HUNDRED_MARKER_WORD);
 
-			String numberToParse = "" + groupCharArray[1] + groupCharArray[2];
+			String numberToParse = "" + group.charAt(1) + group.charAt(2);
 			parseTwoOrOneDigitNumber(numberToParse);
 		} else {
-			String numberToParse = groupCharArray.length == 1 ? String.valueOf(groupCharArray[0])
-					: "" + groupCharArray[0] + groupCharArray[1];
+			String numberToParse = group.length() == 1 ? String.valueOf(group.charAt(0))
+					: "" + group.charAt(0) + group.charAt(1);
 			parseTwoOrOneDigitNumber(numberToParse);
 		}
 	}
