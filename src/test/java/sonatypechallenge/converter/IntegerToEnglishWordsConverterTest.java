@@ -209,6 +209,15 @@ public class IntegerToEnglishWordsConverterTest {
 		expectedResults.put(-55, "minus fifty-five");
 		expectedResults.put(-200, "minus two hundred");
 		expectedResults.put(-320, "minus three hundred twenty");
+		expectedResults.put(-8_500_003, "minus eight million five hundred thousand three");
+		expectedResults.put(-9_300_014, "minus nine million three hundred thousand fourteen");
+		expectedResults.put(-8_400_310, "minus eight million four hundred thousand three hundred ten");
+		expectedResults.put(-7_400_668, "minus seven million four hundred thousand six hundred sixty-eight");
+		expectedResults.put(-6_200_702, "minus six million two hundred thousand seven hundred two");
+		expectedResults.put(-5_900_900, "minus five million nine hundred thousand nine hundred");
+
+		expectedResults.put(Integer.MIN_VALUE, "minus two billion " + "one hundred forty-seven million "
+				+ "four hundred eighty-three thousand " + "six hundred forty-seven");
 
 		IntegerToWordsConverter englishConverter = new IntegerToEnglishWordsConverter();
 		for (Entry<Integer, String> entry : expectedResults.entrySet()) {

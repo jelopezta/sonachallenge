@@ -51,7 +51,8 @@ public class IntegerToEnglishWordsConverter implements IntegerToWordsConverter {
 			String groupRemainderToParse = getRemainderToParse(group);
 			parseTwoOrOneDigitNumber(groupRemainderToParse);
 
-			if (words.size() > currentWords) {
+			boolean wordsAddedForGroup = words.size() > currentWords;
+			if (wordsAddedForGroup) {
 				// only add marker if words were added for the group
 				words.add(MARKERS_PER_GROUP[totalMarkersNeeded--]);
 			} else {
@@ -106,7 +107,8 @@ public class IntegerToEnglishWordsConverter implements IntegerToWordsConverter {
 	}
 
 	private String[] getThreeDigitNumberTokensOfPositiveNumber(int numberToConvert) {
-		int absoluteNumberToConvert = Math.abs(numberToConvert);
+		int absoluteNumberToConvert = getAbsoluteInteger(numberToConvert);
+
 		// Use a custom separator to prevent locale specific problems when splitting
 		DecimalFormatSymbols customDecimalFormatSeparator = new DecimalFormatSymbols(Locale.getDefault());
 		customDecimalFormatSeparator.setGroupingSeparator('|');
@@ -117,6 +119,10 @@ public class IntegerToEnglishWordsConverter implements IntegerToWordsConverter {
 		DecimalFormat formatter = new DecimalFormat(formatPattern, customDecimalFormatSeparator);
 		String format = formatter.format(absoluteNumberToConvert);
 		return format.split("\\|");
+	}
+
+	private int getAbsoluteInteger(int numberToConvert) {
+		return Integer.MIN_VALUE == numberToConvert ? Integer.MAX_VALUE : Math.abs(numberToConvert);
 	}
 
 	private void addMinusForNegativeNumber() {
