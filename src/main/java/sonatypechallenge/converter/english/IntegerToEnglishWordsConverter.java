@@ -1,7 +1,10 @@
 package sonatypechallenge.converter.english;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 import sonatypechallenge.converter.IntegerToWordsConverter;
@@ -81,19 +84,16 @@ public class IntegerToEnglishWordsConverter implements IntegerToWordsConverter {
 	}
 
 	private String[] getNumberTokens(int numberToConvert) {
-		final StringBuilder tokensBuilder = new StringBuilder();
-		int counter = 1;
-		char[] numberAsCharArray = Integer.toString(numberToConvert).toCharArray();
+		// Use a custom separator to prevent locale specific problems when splitting
+		DecimalFormatSymbols customDecimalFormatSeparator = new DecimalFormatSymbols(Locale.getDefault());
+		customDecimalFormatSeparator.setGroupingSeparator('|');
 
-		for (char digitInCharArray : numberAsCharArray) {
-			tokensBuilder.append(digitInCharArray);
-			if (counter % 3 == 0) {
-				tokensBuilder.append('.');
-			}
-			counter++;
-		}
-
-		return tokensBuilder.toString().split("\\.");
+		// we have to use comma as the grouping separator in the pattern, even when
+		// using a custom one
+		String formatPattern = "#,###";
+		DecimalFormat formatter = new DecimalFormat(formatPattern, customDecimalFormatSeparator);
+		String format = formatter.format(numberToConvert);
+		return format.split("\\|");
 	}
 
 	private void addMinusForNegativeNumber() {
