@@ -14,7 +14,7 @@ public class IntegerToWordsService {
 
 	@GET
 	@Path("/{numberToTransform}")
-	public Response getMsg(@PathParam("numberToTransform") String number) {
+	public Response transformNumberToEnglishWord(@PathParam("numberToTransform") String number) {
 
 		String numberInWords = null;
 		IntegerValidator validator = new IntegerValidator();

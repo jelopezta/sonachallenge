@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Basic Integer to english words converter</title>
+<meta
+	name="viewport"
+	content="width=device-width, initial-scale=1">
+<link
+	rel="stylesheet"
+	type="text/css"
+	href="css/app.css">
+
+<script
+	type="text/javascript"
+	src="js/functions.js"></script>
+</head>
+<body>
+	<div class="content">
+		<h2>Integer to English words converter</h2>
+		<label for="numberToTransform">Please enter the number you
+			want to transform into words:</label> <input
+			type="number"
+			id="numberToTransform"
+			name="numberToTransform"
+			min="-2147483647"
+			max="2147483647"
+			pattern="\d*"
+			style="display: inline-block;"> <input
+			type="button"
+			value="Give me the words!"
+			onclick="convertNumber()"> <input
+			type="button"
+			value="Clear"
+			onclick="clearResult()"> <label
+			id="responseLabel"
+			style="display: inline-block;"></label>
+	</div>
+</body>
+</html>
