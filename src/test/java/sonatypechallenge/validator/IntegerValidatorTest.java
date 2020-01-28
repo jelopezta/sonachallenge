@@ -44,10 +44,10 @@ public class IntegerValidatorTest {
 	public void inputOutOfLowerBounds() {
 		IntegerValidator integerValidator = new IntegerValidator();
 		try {
-			integerValidator.checkNumberIsValidIntegerOrThrowValidationException("" + (Integer.MIN_VALUE));
+			integerValidator.checkNumberIsValidIntegerOrThrowValidationException("" + (Integer.MIN_VALUE - 1d));
 			fail("Expected exception not thrown");
 		} catch (IntegerValidationException e) {
-			assertEquals("Number is not within the bounds of an Integer. Original input: " + (Integer.MIN_VALUE),
+			assertEquals("Number is not within the bounds of an Integer. Original input: " + (Integer.MIN_VALUE - 1d),
 					e.getMessage());
 		}
 	}

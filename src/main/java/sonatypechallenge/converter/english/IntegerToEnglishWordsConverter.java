@@ -107,7 +107,7 @@ public class IntegerToEnglishWordsConverter implements IntegerToWordsConverter {
 	}
 
 	private String[] getThreeDigitNumberTokensOfPositiveNumber(int numberToConvert) {
-		int absoluteNumberToConvert = getAbsoluteInteger(numberToConvert);
+		double absoluteNumberToConvert = getAbsoluteNumber(numberToConvert);
 
 		// Use a custom separator to prevent locale specific problems when splitting
 		DecimalFormatSymbols customDecimalFormatSeparator = new DecimalFormatSymbols(Locale.getDefault());
@@ -121,8 +121,8 @@ public class IntegerToEnglishWordsConverter implements IntegerToWordsConverter {
 		return format.split("\\|");
 	}
 
-	private int getAbsoluteInteger(int numberToConvert) {
-		return Math.abs(numberToConvert);
+	private double getAbsoluteNumber(int numberToConvert) {
+		return Integer.MIN_VALUE == numberToConvert ? Integer.MAX_VALUE + 1d : Math.abs(numberToConvert);
 	}
 
 	private void addMinusForNegativeNumber() {

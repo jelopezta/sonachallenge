@@ -26,7 +26,7 @@ public class IntegerValidator {
 			throw new IntegerValidationException(number, "Input is not a number.", e);
 		}
 
-		if (parsedNumber > Integer.MAX_VALUE || parsedNumber <= Integer.MIN_VALUE) {
+		if (parsedNumber > Integer.MAX_VALUE || parsedNumber < Integer.MIN_VALUE) {
 			throw new IntegerValidationException(number, "Number is not within the bounds of an Integer.");
 		}
 	}
