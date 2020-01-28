@@ -23,7 +23,7 @@ public class IntegerToEnglishWordsConverter implements IntegerToWordsConverter {
 
 	private List<String> words;
 	private String[] numberAsStringGroups;
-	boolean isNegativeNumber;
+	private boolean numberLessThanZero;
 
 	@Override
 	public String transformIntoWords(int numberToConvert) {
@@ -101,7 +101,7 @@ public class IntegerToEnglishWordsConverter implements IntegerToWordsConverter {
 	}
 
 	private void initializeTransformationValues(int numberToConvert) {
-		isNegativeNumber = numberToConvert < 0;
+		numberLessThanZero = numberToConvert < 0;
 		numberAsStringGroups = getThreeDigitNumberTokensOfPositiveNumber(numberToConvert);
 		words = new ArrayList<>();
 	}
@@ -126,7 +126,7 @@ public class IntegerToEnglishWordsConverter implements IntegerToWordsConverter {
 	}
 
 	private void addMinusForNegativeNumber() {
-		if (isNegativeNumber) {
+		if (numberLessThanZero) {
 			words.add("minus");
 		}
 	}
