@@ -15,13 +15,13 @@ enum EnglishNumbersBelowTwenty {
 	private final int numberAsInt;
 	private final String numberAsThreeDigitString;
 
-	private final static Map<Integer, EnglishNumbersBelowTwenty> numberSearchByIntRepresentation = new HashMap<>();
-	private final static Map<String, EnglishNumbersBelowTwenty> numberSearchByStringRepresentation = new HashMap<>();
+	private final static Map<Integer, EnglishNumbersBelowTwenty> NUMBER_SEARCH_BY_INT_REPRESENTATION = new HashMap<>();
+	private final static Map<String, EnglishNumbersBelowTwenty> NUMBER_SEARCH_BY_STRING_REPRESENTATION = new HashMap<>();
 
 	static {
 		for (EnglishNumbersBelowTwenty number : EnglishNumbersBelowTwenty.values()) {
-			numberSearchByIntRepresentation.put(number.numberAsInt, number);
-			numberSearchByStringRepresentation.put(number.numberAsThreeDigitString, number);
+			NUMBER_SEARCH_BY_INT_REPRESENTATION.put(number.numberAsInt, number);
+			NUMBER_SEARCH_BY_STRING_REPRESENTATION.put(number.numberAsThreeDigitString, number);
 		}
 	}
 
@@ -31,12 +31,12 @@ enum EnglishNumbersBelowTwenty {
 	}
 
 	static EnglishNumbersBelowTwenty findNumber(int numberToSearch) {
-		return numberSearchByIntRepresentation.get(numberToSearch);
+		return NUMBER_SEARCH_BY_INT_REPRESENTATION.get(numberToSearch);
 	}
 
 	static EnglishNumbersBelowTwenty findNumber(String numberToSearch) {
 		String numberAs3DigitString = "00" + numberToSearch;
-		return numberSearchByStringRepresentation.get(numberAs3DigitString);
+		return NUMBER_SEARCH_BY_STRING_REPRESENTATION.get(numberAs3DigitString);
 	}
 
 	@Override
