@@ -3,6 +3,8 @@ package sonatypechallenge.validator;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import java.math.BigDecimal;
+
 import org.junit.Test;
 
 public class IntegerValidatorTest {
@@ -44,10 +46,11 @@ public class IntegerValidatorTest {
 	public void inputOutOfLowerBounds() {
 		IntegerValidator integerValidator = new IntegerValidator();
 		try {
-			integerValidator.checkNumberIsValidIntegerOrThrowValidationException("" + (Integer.MIN_VALUE - 1d));
+			integerValidator.checkNumberIsValidIntegerOrThrowValidationException("" + new BigDecimal("-2147483649"));
 			fail("Expected exception not thrown");
 		} catch (IntegerValidationException e) {
-			assertEquals("Number is not within the bounds of an Integer. Original input: " + (Integer.MIN_VALUE - 1d),
+			assertEquals(
+					"Number is not within the bounds of an Integer. Original input: " + new BigDecimal("-2147483649"),
 					e.getMessage());
 		}
 	}
@@ -56,10 +59,11 @@ public class IntegerValidatorTest {
 	public void inputOutOfHigherBounds() {
 		IntegerValidator integerValidator = new IntegerValidator();
 		try {
-			integerValidator.checkNumberIsValidIntegerOrThrowValidationException("" + (Integer.MAX_VALUE + 1d));
+			integerValidator.checkNumberIsValidIntegerOrThrowValidationException("" + new BigDecimal("2147483648"));
 			fail("Expected exception not thrown");
 		} catch (IntegerValidationException e) {
-			assertEquals("Number is not within the bounds of an Integer. Original input: " + (Integer.MAX_VALUE + 1d),
+			assertEquals(
+					"Number is not within the bounds of an Integer. Original input: " + new BigDecimal("2147483648"),
 					e.getMessage());
 		}
 	}
@@ -114,13 +118,27 @@ public class IntegerValidatorTest {
 	public void sanitizeInputNumber_numberHasCommas() {
 		IntegerValidator integerValidator = new IntegerValidator();
 		String sanitizedNumber = integerValidator.sanitizeInputNumber("9,8");
-		assertEquals("98", sanitizedNumber);
+		assertEquals("9", sanitizedNumber);
 	}
 
 	@Test
 	public void sanitizeInputNumber_numberHasDots() {
 		IntegerValidator integerValidator = new IntegerValidator();
 		String sanitizedNumber = integerValidator.sanitizeInputNumber("5.6");
-		assertEquals("56", sanitizedNumber);
+		assertEquals("5", sanitizedNumber);
+	}
+
+	@Test
+	public void sanitizeInputNumber_inputIsComma() {
+		IntegerValidator integerValidator = new IntegerValidator();
+		String sanitizedNumber = integerValidator.sanitizeInputNumber(",");
+		assertEquals("", sanitizedNumber);
+	}
+
+	@Test
+	public void sanitizeInputNumber_inputIsDot() {
+		IntegerValidator integerValidator = new IntegerValidator();
+		String sanitizedNumber = integerValidator.sanitizeInputNumber(".");
+		assertEquals("", sanitizedNumber);
 	}
 }

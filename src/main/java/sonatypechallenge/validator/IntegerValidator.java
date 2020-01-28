@@ -40,7 +40,19 @@ public class IntegerValidator {
 	 */
 	public String sanitizeInputNumber(String number) {
 		final String emptyString = "";
-		return number == null ? ""
-				: number.trim().replace(",", emptyString).replace(".", emptyString).replace(" ", emptyString);
+		String finalString = number == null ? "" : number.trim().replace(" ", emptyString);
+		int indexOfComma = finalString.indexOf(",");
+		if (indexOfComma > 0) {
+			finalString = finalString.substring(0, indexOfComma);
+		}
+
+		int indexOfDot = finalString.indexOf(".");
+		if (indexOfDot > 0) {
+			finalString = finalString.substring(0, indexOfDot);
+		}
+
+		// prevent strings that are only , or .
+		finalString = finalString.replace(",", ".").replace(".", "");
+		return finalString;
 	}
 }
