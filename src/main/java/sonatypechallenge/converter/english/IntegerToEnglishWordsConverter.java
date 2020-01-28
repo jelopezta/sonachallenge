@@ -122,7 +122,7 @@ public class IntegerToEnglishWordsConverter implements IntegerToWordsConverter {
 	}
 
 	private int getAbsoluteInteger(int numberToConvert) {
-		return Integer.MIN_VALUE == numberToConvert ? Integer.MAX_VALUE : Math.abs(numberToConvert);
+		return Math.abs(numberToConvert);
 	}
 
 	private void addMinusForNegativeNumber() {
