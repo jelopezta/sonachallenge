@@ -13,7 +13,7 @@ public class IntegerValidator {
 	 * @throws IntegerValidationException if the input doesn't contain a valid
 	 *                                    number that can be stored as an integer.
 	 */
-	public boolean isValidIntegerNumber(String number) throws IntegerValidationException {
+	public void checkNumberIsValidIntegerOrThrowValidationException(String number) throws IntegerValidationException {
 		if (number == null || number.trim().isEmpty()) {
 			throw new IntegerValidationException(number, "The number to validate cannot be empty.");
 		}
@@ -28,7 +28,5 @@ public class IntegerValidator {
 		if (parsedNumber > Integer.MAX_VALUE || parsedNumber <= Integer.MIN_VALUE) {
 			throw new IntegerValidationException(number, "Number is not within the bounds of an Integer.");
 		}
-
-		return true;
 	}
 }

@@ -22,10 +22,9 @@ public class IntegerToWordsService {
 		String numberInWords = null;
 		IntegerValidator validator = new IntegerValidator();
 		try {
-			if (validator.isValidIntegerNumber(number)) {
-				IntegerToEnglishWordsConverter converter = new IntegerToEnglishWordsConverter();
-				numberInWords = converter.transformIntoWords(Integer.parseInt(number));
-			}
+			validator.checkNumberIsValidIntegerOrThrowValidationException(number);
+			IntegerToEnglishWordsConverter converter = new IntegerToEnglishWordsConverter();
+			numberInWords = converter.transformIntoWords(Integer.parseInt(number));
 		} catch (IntegerValidationException e) {
 			return Response.status(STATUS_CODE_BAD_REQUEST).entity(e.getMessage()).build();
 		}
