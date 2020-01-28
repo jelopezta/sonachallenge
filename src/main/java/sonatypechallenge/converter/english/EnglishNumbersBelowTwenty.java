@@ -35,7 +35,7 @@ enum EnglishNumbersBelowTwenty {
 	}
 
 	static EnglishNumbersBelowTwenty findNumber(String numberToSearch) {
-		String numberAs3DigitString = numberToSearch.length() == 1 ? "00" + numberToSearch : "0" + numberToSearch;
+		String numberAs3DigitString = "00" + numberToSearch;
 		return numberSearchByStringRepresentation.get(numberAs3DigitString);
 	}
 

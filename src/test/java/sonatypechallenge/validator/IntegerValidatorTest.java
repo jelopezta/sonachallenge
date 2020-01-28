@@ -2,6 +2,7 @@ package sonatypechallenge.validator;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
@@ -12,6 +13,7 @@ public class IntegerValidatorTest {
 		IntegerValidator integerValidator = new IntegerValidator();
 		try {
 			integerValidator.isValidIntegerNumber(null);
+			fail("Expected exception not thrown");
 		} catch (IntegerValidationException e) {
 			assertEquals("The number to validate cannot be empty. Original input: null", e.getMessage());
 		}
@@ -22,6 +24,7 @@ public class IntegerValidatorTest {
 		IntegerValidator integerValidator = new IntegerValidator();
 		try {
 			integerValidator.isValidIntegerNumber("  ");
+			fail("Expected exception not thrown");
 		} catch (IntegerValidationException e) {
 			assertEquals("The number to validate cannot be empty. Original input: " + "  ", e.getMessage());
 		}
@@ -32,6 +35,7 @@ public class IntegerValidatorTest {
 		IntegerValidator integerValidator = new IntegerValidator();
 		try {
 			integerValidator.isValidIntegerNumber("huafwsdihupfsd");
+			fail("Expected exception not thrown");
 		} catch (IntegerValidationException e) {
 			assertEquals("Input is not a number. Original input: huafwsdihupfsd", e.getMessage());
 		}
@@ -41,9 +45,10 @@ public class IntegerValidatorTest {
 	public void inputOutOfLowerBounds() {
 		IntegerValidator integerValidator = new IntegerValidator();
 		try {
-			integerValidator.isValidIntegerNumber("" + (Integer.MIN_VALUE - 1));
+			integerValidator.isValidIntegerNumber("" + (Integer.MIN_VALUE - 1d));
+			fail("Expected exception not thrown");
 		} catch (IntegerValidationException e) {
-			assertEquals("Number is not within the bounds of an Integer. Original input: " + (Integer.MIN_VALUE - 1),
+			assertEquals("Number is not within the bounds of an Integer. Original input: " + (Integer.MIN_VALUE - 1d),
 					e.getMessage());
 		}
 	}
@@ -52,9 +57,10 @@ public class IntegerValidatorTest {
 	public void inputOutOfHigherBounds() {
 		IntegerValidator integerValidator = new IntegerValidator();
 		try {
-			integerValidator.isValidIntegerNumber("" + (Integer.MAX_VALUE + 1));
+			integerValidator.isValidIntegerNumber("" + (Integer.MAX_VALUE + 1d));
+			fail("Expected exception not thrown");
 		} catch (IntegerValidationException e) {
-			assertEquals("Number is not within the bounds of an Integer. Original input: " + (Integer.MAX_VALUE + 1),
+			assertEquals("Number is not within the bounds of an Integer. Original input: " + (Integer.MAX_VALUE + 1d),
 					e.getMessage());
 		}
 	}
