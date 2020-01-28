@@ -20,3 +20,4 @@ http://localhost:9065/sonatypechallenge/rest/englishconverter/{number}
 ### Further enhancements
 *   Integration testing closer to the end user using tools like Cucumber or Fitnesse
 *   Security layer to access service
+*   Separate presentation layer from application layer further, packaging the actual converter as a separate jar and using it as a dependency
