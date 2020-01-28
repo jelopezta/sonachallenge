@@ -12,9 +12,6 @@ import sonatypechallenge.validator.IntegerValidator;
 @Path("/englishconverter")
 public class IntegerToWordsService {
 
-	private static final int STATUS_CODE_OK = 200;
-	private static final int STATUS_CODE_BAD_REQUEST = 400;
-
 	@GET
 	@Path("/{numberToTransform}")
 	public Response transformNumberToEnglishWord(@PathParam("numberToTransform") String number) {
@@ -26,10 +23,10 @@ public class IntegerToWordsService {
 			IntegerToEnglishWordsConverter converter = new IntegerToEnglishWordsConverter();
 			numberInWords = converter.transformIntoWords(Integer.parseInt(number));
 		} catch (IntegerValidationException e) {
-			return Response.status(STATUS_CODE_BAD_REQUEST).entity(e.getMessage()).build();
+			return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
 		}
 
-		return Response.status(STATUS_CODE_OK).entity(numberInWords).build();
+		return Response.status(Response.Status.OK).entity(numberInWords).build();
 	}
 
 }
