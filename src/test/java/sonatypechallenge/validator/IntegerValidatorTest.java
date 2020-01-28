@@ -11,7 +11,7 @@ public class IntegerValidatorTest {
 	public void inputCannotBeNull() {
 		IntegerValidator integerValidator = new IntegerValidator();
 		try {
-			boolean inputIsValidInteger = integerValidator.isValidIntegerNumber(null);
+			integerValidator.isValidIntegerNumber(null);
 		} catch (IntegerValidationException e) {
 			assertEquals("The number to validate cannot be empty. Original input: null", e.getMessage());
 		}
@@ -21,7 +21,7 @@ public class IntegerValidatorTest {
 	public void inputCannotBeEmpty() {
 		IntegerValidator integerValidator = new IntegerValidator();
 		try {
-			boolean inputIsValidInteger = integerValidator.isValidIntegerNumber("  ");
+			integerValidator.isValidIntegerNumber("  ");
 		} catch (IntegerValidationException e) {
 			assertEquals("The number to validate cannot be empty. Original input: " + "  ", e.getMessage());
 		}
@@ -31,7 +31,7 @@ public class IntegerValidatorTest {
 	public void inputHasToBeNumber() {
 		IntegerValidator integerValidator = new IntegerValidator();
 		try {
-			boolean inputIsValidInteger = integerValidator.isValidIntegerNumber("huafwsdihupfsd");
+			integerValidator.isValidIntegerNumber("huafwsdihupfsd");
 		} catch (IntegerValidationException e) {
 			assertEquals("Input is not a number. Original input: huafwsdihupfsd", e.getMessage());
 		}
@@ -41,7 +41,7 @@ public class IntegerValidatorTest {
 	public void inputOutOfLowerBounds() {
 		IntegerValidator integerValidator = new IntegerValidator();
 		try {
-			boolean inputIsValidInteger = integerValidator.isValidIntegerNumber("" + (Integer.MIN_VALUE - 1));
+			integerValidator.isValidIntegerNumber("" + (Integer.MIN_VALUE - 1));
 		} catch (IntegerValidationException e) {
 			assertEquals("Number is not within the bounds of an Integer. Original input: " + (Integer.MIN_VALUE - 1),
 					e.getMessage());
@@ -52,7 +52,7 @@ public class IntegerValidatorTest {
 	public void inputOutOfHigherBounds() {
 		IntegerValidator integerValidator = new IntegerValidator();
 		try {
-			boolean inputIsValidInteger = integerValidator.isValidIntegerNumber("" + (Integer.MAX_VALUE + 1));
+			integerValidator.isValidIntegerNumber("" + (Integer.MAX_VALUE + 1));
 		} catch (IntegerValidationException e) {
 			assertEquals("Number is not within the bounds of an Integer. Original input: " + (Integer.MAX_VALUE + 1),
 					e.getMessage());
