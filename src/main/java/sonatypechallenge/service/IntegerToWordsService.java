@@ -20,13 +20,15 @@ public class IntegerToWordsService {
 		IntegerValidator validator = new IntegerValidator();
 		try {
 			validator.checkNumberIsValidIntegerOrThrowValidationException(number);
-			IntegerToEnglishWordsConverter converter = new IntegerToEnglishWordsConverter();
-			numberInWords = converter.transformIntoWords(Integer.parseInt(number));
 		} catch (IntegerValidationException e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
 		}
+		
+		IntegerToEnglishWordsConverter converter = new IntegerToEnglishWordsConverter();
+		numberInWords = converter.transformIntoWords(Integer.parseInt(validator.sanitizeInputNumber(number)));
 
 		return Response.status(Response.Status.OK).entity(numberInWords).build();
 	}
+	
 
 }

@@ -74,4 +74,53 @@ public class IntegerValidatorTest {
 			throw new RuntimeException("Unexpected exception thrown", e);
 		}
 	}
+
+	@Test
+	public void sanitizeInputNumber_numberIsNull() {
+		IntegerValidator integerValidator = new IntegerValidator();
+		String sanitizedNumber = integerValidator.sanitizeInputNumber(null);
+		assertEquals("", sanitizedNumber);
+	}
+
+	@Test
+	public void sanitizeInputNumber_numberIsEmpty() {
+		IntegerValidator integerValidator = new IntegerValidator();
+		String sanitizedNumber = integerValidator.sanitizeInputNumber("");
+		assertEquals("", sanitizedNumber);
+	}
+
+	@Test
+	public void sanitizeInputNumber_numberHasTrailingSpaces() {
+		IntegerValidator integerValidator = new IntegerValidator();
+		String sanitizedNumber = integerValidator.sanitizeInputNumber("9   ");
+		assertEquals("9", sanitizedNumber);
+	}
+
+	@Test
+	public void sanitizeInputNumber_numberHasLeadingSpaces() {
+		IntegerValidator integerValidator = new IntegerValidator();
+		String sanitizedNumber = integerValidator.sanitizeInputNumber("   8");
+		assertEquals("8", sanitizedNumber);
+	}
+
+	@Test
+	public void sanitizeInputNumber_numberHasMiddleSpaces() {
+		IntegerValidator integerValidator = new IntegerValidator();
+		String sanitizedNumber = integerValidator.sanitizeInputNumber("6   8");
+		assertEquals("68", sanitizedNumber);
+	}
+
+	@Test
+	public void sanitizeInputNumber_numberHasCommas() {
+		IntegerValidator integerValidator = new IntegerValidator();
+		String sanitizedNumber = integerValidator.sanitizeInputNumber("9,8");
+		assertEquals("98", sanitizedNumber);
+	}
+
+	@Test
+	public void sanitizeInputNumber_numberHasDots() {
+		IntegerValidator integerValidator = new IntegerValidator();
+		String sanitizedNumber = integerValidator.sanitizeInputNumber("5.6");
+		assertEquals("56", sanitizedNumber);
+	}
 }
