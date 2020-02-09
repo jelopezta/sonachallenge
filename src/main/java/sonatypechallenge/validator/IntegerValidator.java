@@ -1,5 +1,7 @@
 package sonatypechallenge.validator;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * Class to determine if a passed input is a valid integer.
  *
@@ -39,7 +41,7 @@ public class IntegerValidator {
 	 * @return the number as string without trailing spaces or separators
 	 */
 	public String sanitizeInputNumber(String number) {
-		final String emptyString = "";
+		final String emptyString = StringUtils.EMPTY;
 		String finalString = number == null ? "" : number.trim().replace(" ", emptyString);
 		int indexOfComma = finalString.indexOf(",");
 		if (indexOfComma > 0) {
